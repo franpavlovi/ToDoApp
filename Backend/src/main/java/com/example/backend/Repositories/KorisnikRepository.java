@@ -13,5 +13,5 @@ public interface KorisnikRepository extends JpaRepository<Korisnik, Long> {
         Korisnik findByEmail(String email);
 
         boolean existsByEmail(String email);
-        
+
 }
