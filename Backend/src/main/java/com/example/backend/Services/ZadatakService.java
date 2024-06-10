@@ -28,7 +28,7 @@ public class ZadatakService {
 
     public void deleteZadatak(Long id){
 
-         zadatakRepository.deleteById(id);
+        zadatakRepository.deleteById(id);
 
     }
 

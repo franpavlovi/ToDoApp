@@ -42,7 +42,7 @@ public class KorisnikService {
     public Korisnik updateKorisnik(Long id,Korisnik noviKorisnik){
 
         Korisnik korisnik = korisnikRepository.findById(id)
-                        .orElseThrow(() ->new EntityNotFoundException("Korisnik ne postoji"));
+                .orElseThrow(() ->new EntityNotFoundException("Korisnik ne postoji"));
 
         korisnik.setIme(noviKorisnik.getIme());
         korisnik.setPrezime(noviKorisnik.getPrezime());

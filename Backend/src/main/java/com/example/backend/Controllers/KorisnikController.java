@@ -19,8 +19,8 @@ public class KorisnikController {
     @GetMapping("/listaKorisnika")
     public ResponseEntity<List<Korisnik>> getAllKorisnici(){
 
-       List<Korisnik> korisnici = korisnikService.getAllKorisnici();
-       return ResponseEntity.ok(korisnici);
+        List<Korisnik> korisnici = korisnikService.getAllKorisnici();
+        return ResponseEntity.ok(korisnici);
     }
 
     @PostMapping

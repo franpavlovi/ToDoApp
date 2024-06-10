@@ -1,5 +1,6 @@
 package com.example.backend.Models;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -7,7 +8,7 @@ import jakarta.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-@Email
+@Entity
 public class Zadatak {
 
     @Id
