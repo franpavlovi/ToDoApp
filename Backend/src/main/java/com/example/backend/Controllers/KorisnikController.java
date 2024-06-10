@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("/api/korisnik")
+@RestController
+@RequestMapping("/api/korisnik")
 public class KorisnikController {
 
     @Autowired
