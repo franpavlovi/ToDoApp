@@ -22,7 +22,7 @@ public class ZadatakController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Zadatak> deleteZadatak(@RequestParam Long id){
+    public ResponseEntity<Zadatak> deleteZadatak(@PathVariable Long id){
 
         zadatakService.deleteZadatak(id);
         return ResponseEntity.noContent().build();
@@ -36,7 +36,7 @@ public class ZadatakController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Zadatak> updateZadatak(@RequestParam Long id, @RequestBody Zadatak noviZadatak){
+    public ResponseEntity<Zadatak> updateZadatak(@PathVariable Long id, @RequestBody Zadatak noviZadatak){
 
         Zadatak azurirani = zadatakService.updateZadatak(id, noviZadatak);
         return ResponseEntity.ok(azurirani);
