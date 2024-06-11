@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'prijava.dart';
 
 class Registracija extends StatelessWidget {
@@ -7,6 +9,45 @@ class Registracija extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _lozinkaController = TextEditingController();
   final TextEditingController _potvrdaLozinkeController = TextEditingController();
+
+  Future<void> _registrirajSe(BuildContext context) async {
+    final ime = _imeController.text;
+    final prezime = _prezimeController.text;
+    final email = _emailController.text;
+    final lozinka = _lozinkaController.text;
+    final potvrdaLozinke = _potvrdaLozinkeController.text;
+
+    if (lozinka != potvrdaLozinke) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Lozinke se ne podudaraju')),
+      );
+      return;
+    }
+
+    final response = await http.post(
+      Uri.parse('http://localhost:8080/api/auth/registracija'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'ime': ime,
+        'prezime': prezime,
+        'email': email,
+        'lozinka': lozinka,
+        'potvrdaLozinke': potvrdaLozinke,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => Prijava()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registracija nije uspjela: ${response.body}')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +99,7 @@ class Registracija extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // Implementiraj logiku za registraciju
-              },
+              onPressed: () => _registrirajSe(context),
               child: Text('Registracija'),
             ),
           ],
