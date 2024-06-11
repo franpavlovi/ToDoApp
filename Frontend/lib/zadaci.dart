@@ -137,17 +137,27 @@ class _ZadaciState extends State<Zadaci> {
               itemCount: _zadaci.length,
               itemBuilder: (context, index) {
                 final zadatak = _zadaci[index];
-                return ListTile(
-                  title: Text(zadatak.naziv),
-                  trailing: Checkbox(
-                    value: zadatak.zavrsen,
-                    onChanged: (_) => _toggleZadatak(zadatak),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    elevation: 4,
+                    child: ListTile(
+                      title: Text(zadatak.naziv),
+                      trailing: Checkbox(
+                        value: zadatak.zavrsen,
+                        onChanged: (_) => _toggleZadatak(zadatak),
+                      ),
+                      onTap: () => _obrisiZadatak(zadatak.id),
+                    ),
                   ),
-                  onTap: () => _obrisiZadatak(zadatak.id),
                 );
               },
             ),
           ),
+
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
