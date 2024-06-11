@@ -11,9 +11,9 @@ class Zadatak {
 
   factory Zadatak.fromJson(Map<String, dynamic> json) {
     return Zadatak(
-      id: (json['id'] as num).toInt(), 
+      id: (json['id'] as num).toInt(),
       naziv: json['naziv'] as String,
-      zavrsen: json['zavrsen'] as bool,
+      zavrsen: json['status'] as bool,
     );
   }
 }
@@ -36,10 +36,7 @@ class _ZadaciState extends State<Zadaci> {
     final response = await http.get(Uri.parse('http://localhost:8080/api/zadaci'));
 
     if (response.statusCode == 200) {
-      final String responseBody = response.body;
-      print('Response body: $responseBody');  // Dodano za debugiranje
-
-      final List<dynamic> zadaciJson = jsonDecode(responseBody);
+      final List<dynamic> zadaciJson = jsonDecode(response.body);
       setState(() {
         _zadaci = zadaciJson.map((json) => Zadatak.fromJson(json)).toList();
       });
@@ -58,7 +55,7 @@ class _ZadaciState extends State<Zadaci> {
       },
       body: jsonEncode(<String, dynamic>{
         'naziv': zadatak.naziv,
-        'zavrsen': !zadatak.zavrsen,
+        'status': !zadatak.zavrsen,
       }),
     );
 
@@ -97,12 +94,12 @@ class _ZadaciState extends State<Zadaci> {
       },
       body: jsonEncode(<String, dynamic>{
         'naziv': naziv,
-        'zavrsen': false,
+        'status': false,
       }),
     );
 
-    if (response.statusCode == 201) {
-      _fetchZadaci(); // Ponovno učitaj zadatke
+    if (response.statusCode == 200) {
+      _fetchZadaci();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Ne mogu dodati zadatak: ${response.body}')),
@@ -179,3 +176,5 @@ class _ZadaciState extends State<Zadaci> {
     );
   }
 }
+
+void main() => runApp(MaterialApp(home: Zadaci()));
